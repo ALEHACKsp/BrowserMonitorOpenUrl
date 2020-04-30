@@ -67,8 +67,9 @@ BOOL CChromiumLoadUrl_DemoDlg::OnCopyData(CWnd*, COPYDATASTRUCT*p)
   LPARAM lParam = (LPARAM)p;
   CString strText;
   strText.Format(L"[%u] Open Url: %s", 
-    GetOpendProcessIdByLParam(lParam), 
-    ATL::CA2W(GetOpendUrlByLParam(lParam), CP_UTF8));
+    GetOpenedProcessIdByLParam(lParam), 
+    (LPCWSTR)ATL::CA2W(GetOpenedUrlByLParam(lParam), CP_UTF8)
+  );
   m_lstOutList.InsertString(0, strText);
   return TRUE;
 }
@@ -185,6 +186,11 @@ void CChromiumLoadUrl_DemoDlg::OnBnClickedBtnStart()
     return;
 
   m_hrInitRet = StartMonitorOpenUrlByNotifyWnd(m_hWnd);
+
+  if (SUCCEEDED(m_hrInitRet))
+    MessageBoxW(L"¼à¿Ø³É¹¦£¡");
+  else
+    MessageBoxW(L"¼à¿ØÊ§°Ü£¡");
 }
 
 

@@ -17,8 +17,8 @@ HRESULT StartMonitorOpenUrlByNotifyWnd(HWND hNotifyWnd);
 
 //获取浏览器当前打开的Url
 extern "C" __declspec(dllexport)
-LPCSTR GetOpendUrlByLParam(LPARAM lParam);
+LPCSTR GetOpenedUrlByLParam(LPARAM lParam);
 
 //获取浏览器进程Id
 extern "C" __declspec(dllexport)
-DWORD GetOpendProcessIdByLParam(LPARAM lParam);
+DWORD GetOpenedProcessIdByLParam(LPARAM lParam);
