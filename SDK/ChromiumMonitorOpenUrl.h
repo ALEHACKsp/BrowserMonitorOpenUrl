@@ -15,6 +15,9 @@
 extern "C" __declspec(dllexport)
 HRESULT StartMonitorOpenUrlByNotifyWnd(HWND hNotifyWnd);
 
+extern "C" __declspec(dllexport)
+HRESULT StartMonitorOpenUrlByNotifyWnd_SB(HWND hNotifyWnd);
+
 //获取浏览器当前打开的Url
 extern "C" __declspec(dllexport)
 LPCSTR GetOpenedUrlByLParam(LPARAM lParam);
