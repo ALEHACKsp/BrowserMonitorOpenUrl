@@ -1,4 +1,4 @@
-
+﻿
 // ChromiumLoadUrl_DemoDlg.cpp : implementation file
 //
 
@@ -47,6 +47,26 @@ END_MESSAGE_MAP()
 
 // CChromiumLoadUrl_DemoDlg dialog
 
+static CStringW g_strSupported =
+L"本项目支持目前国内及国际上流行的各大主流浏览器，清单如下：\n\
+Internet Explorer (32位， 64位)\n\
+Chrome 谷歌浏览器  (32位， 64位)\n\
+QQ浏览器\n\
+联想浏览器\n\
+360极速浏览器\n\
+360安全浏览器\n\
+2345加速浏览器\n\
+UC浏览器\n\
+小智双核浏览器\n\
+Opera桌面浏览器 （64位）\n\
+猎豹安全浏览器\n\
+世界之窗浏览器\n\
+百分浏览器（chrome.exe）\n\
+星愿浏览器(64位)\n\
+115浏览器\n\
+123加速浏览器\n\
+111安全浏览器（TopSpeedBrowser2.exe）\n\
+…… …… 等等";
 
 
 CChromiumLoadUrl_DemoDlg::CChromiumLoadUrl_DemoDlg(CWnd* pParent /*=NULL*/)
@@ -68,7 +88,7 @@ BOOL CChromiumLoadUrl_DemoDlg::OnCopyData(CWnd*, COPYDATASTRUCT*p)
   {
     LPARAM lParam = (LPARAM)p;
     CString strText;
-    strText.Format(L"[%u] Open Url: %s",
+    strText.Format(L"[PID = %u] Open Url: %s",
       GetOpenedProcessIdByLParam(lParam),
       (LPCWSTR)ATL::CA2W(GetOpenedUrlByLParam(lParam), CP_UTF8)
     );
@@ -188,14 +208,19 @@ void CChromiumLoadUrl_DemoDlg::OnBnClickedBtnStart()
   if (SUCCEEDED(m_hrInitRet))
     return;
 
+  if (IDOK != MessageBoxW(
+    (L"你要明白，这只是体验版的一个最简单的demo，并不开放进程实时监控能力。\n请确保先打开所有待监控的浏览器，再点击【确定】按钮！\n\n" + g_strSupported)
+    , nullptr, MB_OKCANCEL))
+    return;
+
   m_hrInitRet = StartMonitorOpenUrlByNotifyWnd(m_hWnd);
 
   if (SUCCEEDED(m_hrInitRet))
-    MessageBoxW(L"��سɹ���");
+    MessageBoxW(L"监控成功！");
   else if (E_ABORT == m_hrInitRet)
-    MessageBoxW(L"�����3���������ڽ������빺����ʽ��Ȩ�汾��������������ϵͳ����ִ�У�");
+    MessageBoxW(L"体验版3分钟试用期结束，请购买正式授权版本，或者重新启动系统尝试执行！");
   else
-    MessageBoxW(L"���ʧ�ܣ�");
+    MessageBoxW(L"监控失败！");
 }
 
 
