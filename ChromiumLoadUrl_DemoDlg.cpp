@@ -64,13 +64,16 @@ void CChromiumLoadUrl_DemoDlg::DoDataExchange(CDataExchange* pDX)
 
 BOOL CChromiumLoadUrl_DemoDlg::OnCopyData(CWnd*, COPYDATASTRUCT*p)
 {
-  LPARAM lParam = (LPARAM)p;
-  CString strText;
-  strText.Format(L"[%u] Open Url: %s", 
-    GetOpenedProcessIdByLParam(lParam), 
-    (LPCWSTR)ATL::CA2W(GetOpenedUrlByLParam(lParam), CP_UTF8)
-  );
-  m_lstOutList.InsertString(0, strText);
+  if (-1 != p->dwData)
+  {
+    LPARAM lParam = (LPARAM)p;
+    CString strText;
+    strText.Format(L"[%u] Open Url: %s",
+      GetOpenedProcessIdByLParam(lParam),
+      (LPCWSTR)ATL::CA2W(GetOpenedUrlByLParam(lParam), CP_UTF8)
+    );
+    m_lstOutList.InsertString(0, strText);
+  }
   return TRUE;
 }
 
@@ -189,6 +192,8 @@ void CChromiumLoadUrl_DemoDlg::OnBnClickedBtnStart()
 
   if (SUCCEEDED(m_hrInitRet))
     MessageBoxW(L"监控成功！");
+  else if (E_ABORT == m_hrInitRet)
+    MessageBoxW(L"体验版3分钟试用期结束，请购买正式授权版本，或者重新启动系统尝试执行！");
   else
     MessageBoxW(L"监控失败！");
 }
